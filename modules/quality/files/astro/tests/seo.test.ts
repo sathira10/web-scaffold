@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { site } from "@/data/site";
+import { llmsTxt } from "@/lib/llms";
 import { robotsTxt } from "@/lib/robots";
 import { absoluteUrl, pageTitle, seo, serializeJsonLd } from "@/lib/seo";
 
@@ -56,5 +57,25 @@ describe("robots.txt", () => {
 
   it("points to the sitemap otherwise", () => {
     expect(robotsTxt(false)).toContain(`Sitemap: ${site.url}/sitemap-index.xml`);
+  });
+});
+
+describe("llms.txt", () => {
+  it("lists nothing in a demo build", () => {
+    expect(llmsTxt([{ heading: "Posts", links: [{ title: "A", path: "/a" }] }], true)).not.toContain(
+      "##",
+    );
+  });
+
+  it("lists the nav pages and module sections otherwise", () => {
+    const posts = [{ title: "A [1]", path: "/a", description: "About A" }];
+    const text = llmsTxt([{ heading: "Posts", links: posts }], false);
+    expect(text).toMatch(new RegExp(`^# ${site.name}\n\n> `));
+    expect(text).toContain(`## Pages\n\n- [Home](${site.url})`);
+    expect(text).toContain(`- [A \\[1\\]](${site.url}/a): About A`);
+  });
+
+  it("leaves out empty sections", () => {
+    expect(llmsTxt([{ heading: "Posts", links: [] }], false)).not.toContain("## Posts");
   });
 });

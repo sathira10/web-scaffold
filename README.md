@@ -67,7 +67,7 @@ modules.
 | `images`         | astro       | `Picture` (astro:assets), a picture registry with credits, a `/credits` page, `Placeholder`              |
 | `analytics`      | astro       | Cookieless Cloudflare Web Analytics, plus GA4 and Meta Pixel after consent                               |
 | `contact-form`   | astro       | A Web3Forms contact page that works without JavaScript, and a privacy page                               |
-| `blog`           | astro       | A Markdown collection, list and post pages, and drafts that only build in dev                            |
+| `blog`           | astro       | A Markdown collection, list and post pages, posts in llms.txt, and drafts that only build in dev         |
 | `dark-theme`     | astro       | Dark tokens, a header toggle, and a saved choice applied before first paint                              |
 | `ui-kit`         | astro, vite | shadcn/ui Button, Input and Label on Radix, plus the token bridge for `shadcn add`                       |
 | `check-site`     | astro       | Checks the built HTML: landmarks, CSP hashes, noindex and sitemap agreement, links, starter text         |

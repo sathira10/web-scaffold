@@ -19,6 +19,8 @@ Planned as 1.0.0 once verified.
 - Modules: analytics, blog, check-site, ci, contact-form, d1, dark-theme, demo, design-system,
   e2e, host-cf-git, host-cf-manual, host-firebase, images, plans-in-repo, quality, ui-kit and
   worker-api.
+- Astro sites serve `/llms.txt`: the site summary, the nav pages and, with the blog module, every
+  post. A module adds a section with a file in `src/parts/llms/`. A demo build lists nothing.
 - The `/new-site` Claude skill.
 - `versions.json`, the single place for every version a project uses, with
   `pnpm versions:check` and `pnpm versions:bump`. Generated projects set

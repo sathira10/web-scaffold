@@ -295,6 +295,15 @@ describe("generate every case without installing", () => {
     create(["add", "worker-api", "--dir", dir]);
     assert.equal(readFileSync(config, "utf8"), "// mine\n");
   });
+  test("an unrelated add doesn't make an edited file look untouched", () => {
+    const dir = join(out, "keep-edit-later");
+    create(["create", "--kind", "app", "--name", "X", "--dir", dir]);
+    const config = join(dir, "vite.config.ts");
+    writeFileSync(config, "// mine\n");
+    create(["add", "plans-in-repo", "--dir", dir]);
+    create(["add", "worker-api", "--dir", dir]);
+    assert.equal(readFileSync(config, "utf8"), "// mine\n");
+  });
   test("add --force replaces an edited file", () => {
     const dir = join(out, "force-edit");
     create(["create", "--kind", "app", "--name", "X", "--dir", dir]);

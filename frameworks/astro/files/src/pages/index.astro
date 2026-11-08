@@ -1,0 +1,11 @@
+---
+import Base from "@/layouts/Base.astro";
+import { site } from "@/data/site";
+---
+
+<Base path="/">
+  <section class="section wrap stack">
+    <h1 class="text-display font-bold">{site.tagline}</h1>
+    <p class="max-w-prose text-lead text-fg-soft">{site.description}</p>
+  </section>
+</Base>

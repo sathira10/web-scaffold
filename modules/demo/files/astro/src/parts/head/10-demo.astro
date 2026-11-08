@@ -1,0 +1,6 @@
+---
+// Demo module. `create.mjs go-live` deletes this file.
+import { site } from "@/data/site";
+---
+
+{site.demo && <script is:inline src="/demo-banner.js" data-key={`${site.slug}:demo-banner`} />}

@@ -1,0 +1,49 @@
+{
+  "$schema": "../../schemas/module.schema.json",
+  "description": "Lint (ESLint + Prettier check), typecheck, Vitest, the token check and the `pnpm check` gate.",
+  "frameworks": ["astro", "vite"],
+  "checkSteps": ["lint", "typecheck", "test", "check:tokens", "build"],
+  "scripts": {
+    "lint": "eslint . && prettier --check .",
+    "test": "vitest run",
+    "check:tokens": "node scripts/check-tokens.mjs"
+  },
+  "devDependencies": [
+    "@eslint/js",
+    "eslint",
+    "eslint-config-prettier",
+    "eslint-plugin-react-hooks",
+    "globals",
+    "typescript-eslint",
+    "vitest"
+  ],
+  "byFramework": {
+    "astro": {
+      "scripts": {
+        "typecheck": "astro check"
+      },
+      "devDependencies": ["@astrojs/check", "eslint-plugin-astro"]
+    },
+    "vite": {
+      "scripts": {
+        "typecheck": "tsc -b"
+      },
+      "devDependencies": ["eslint-plugin-react-refresh"]
+    }
+  },
+  "agents": {
+    "pitfalls": [
+      "pnpm blocks dependency install scripts until the package is listed under `allowBuilds` in `pnpm-workspace.yaml`."
+    ]
+  },
+  "docs": [
+    {
+      "label": "ESLint flat config",
+      "url": "https://eslint.org/docs/latest/use/configure/configuration-files"
+    },
+    {
+      "label": "Vitest",
+      "url": "https://vitest.dev/guide/"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+---
+import { ConsentSettingsLink } from "@/components/ConsentBanner";
+import { hasConsentConfig } from "@/lib/analytics";
+---
+
+{hasConsentConfig() && <ConsentSettingsLink client:only="react" />}

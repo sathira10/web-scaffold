@@ -1,0 +1,27 @@
+---
+import Base from "@/layouts/Base.astro";
+import { pictures, type PictureInfo } from "@/data/pictures";
+
+const list: PictureInfo[] = Object.values(pictures);
+---
+
+<Base title="Picture credits" path="/credits">
+  <article class="mx-auto max-w-prose px-4 py-16">
+    <h1 class="text-h1 font-bold">Picture credits</h1>
+    <p class="mt-4">Thank you to the people who share their work.</p>
+    <ul class="mt-8 flex flex-col gap-4">
+      {
+        list.map((picture) => (
+          <li>
+            {picture.page ? <a class="underline underline-offset-4" href={picture.page}>{picture.title}</a> : picture.title}
+            <br />
+            <span class="text-fg-soft">
+              {picture.creator ? `${picture.creator}, ` : ""}
+              {picture.licenseUrl ? <a class="underline underline-offset-4" href={picture.licenseUrl}>{picture.license}</a> : picture.license}
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </article>
+</Base>

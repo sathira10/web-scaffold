@@ -1,0 +1,98 @@
+---
+// Web3Forms contact form. It posts as a plain HTML form, so it works without JavaScript: Web3Forms
+// sends the visitor back to /contact#contact-sent, and the :target rule shows the thanks note.
+// With JavaScript the script below sends it in place and reports the result.
+import { site } from "@/data/site";
+
+const accessKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "";
+const field =
+  "mt-1 block w-full rounded-md border border-line-strong bg-surface-raised px-3 text-body text-fg";
+---
+
+{
+  accessKey ? (
+    <div data-contact>
+      <form
+        class="grid gap-4"
+        action="https://api.web3forms.com/submit"
+        method="POST"
+        data-contact-form
+      >
+        <input type="hidden" name="access_key" value={accessKey} />
+        <input type="hidden" name="subject" value={`New message from ${site.name}`} />
+        <input type="hidden" name="redirect" value={`${site.url}/contact#contact-sent`} />
+        {/* Honeypot: people never fill this in. */}
+        <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" />
+        <label class="block">
+          Name
+          <input class:list={[field, "min-h-12"]} name="name" autocomplete="name" required />
+        </label>
+        <label class="block">
+          Email
+          <input
+            class:list={[field, "min-h-12"]}
+            name="email"
+            type="email"
+            autocomplete="email"
+            required
+          />
+        </label>
+        <label class="block">
+          Message
+          <textarea class:list={[field, "min-h-32 py-3"]} name="message" required />
+        </label>
+        <div class="flex flex-wrap items-center gap-4">
+          <button
+            type="submit"
+            class="inline-flex min-h-11 items-center rounded-md bg-accent px-5 font-medium text-accent-fg hover:bg-accent-hover"
+          >
+            Send message
+          </button>
+          <p role="status" aria-live="polite" class="text-small text-fg-muted" data-contact-status />
+        </div>
+      </form>
+      <p id="contact-sent" class="mt-4 hidden rounded-md bg-surface p-4 target:block" tabindex="-1">
+        Thanks. Your message is on its way.
+      </p>
+    </div>
+  ) : (
+    <p class="rounded-md border border-line bg-surface p-4 text-small text-fg-muted">
+      The contact form needs PUBLIC_WEB3FORMS_KEY. Until then, email
+      <a class="underline underline-offset-4" href={`mailto:${site.email}`}>{site.email}</a>.
+    </p>
+  )
+}
+
+<script>
+  for (const root of document.querySelectorAll<HTMLElement>("[data-contact]")) {
+    const form = root.querySelector<HTMLFormElement>("[data-contact-form]");
+    const status = root.querySelector<HTMLElement>("[data-contact-status]");
+    const sent = root.querySelector<HTMLElement>("#contact-sent");
+    if (!form || !status || !sent) continue;
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const data = new FormData(form);
+      if (data.get("botcheck")) return;
+      const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      if (button) button.disabled = true;
+      status.textContent = "Sending";
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: data,
+          headers: { Accept: "application/json" },
+        });
+        const result = (await response.json()) as { success?: boolean };
+        if (!result.success) throw new Error("rejected");
+        form.reset();
+        form.hidden = true;
+        sent.classList.remove("hidden");
+        sent.focus();
+      } catch {
+        status.textContent = "That didn't send. Try again, or use the email address below.";
+      } finally {
+        if (button) button.disabled = false;
+      }
+    });
+  }
+</script>

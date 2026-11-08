@@ -1,0 +1,11 @@
+{
+  "$schema": "../../schemas/module.schema.json",
+  "description": "Plans and specs in the repo: a brief, the open items list and a plan template.",
+  "frameworks": ["astro", "vite"],
+  "agents": {
+    "boundaries": [
+      "Read the plan for a task in `plans/` before editing, and update it when scope changes."
+    ]
+  },
+  "manual": ["Fill in `plans/00-brief.md` with the client before building pages."]
+}

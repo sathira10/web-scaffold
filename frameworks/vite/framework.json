@@ -1,0 +1,46 @@
+{
+  "$schema": "../../schemas/framework.schema.json",
+  "label": "Vite + React 19 + React Router (SPA)",
+  "stack": "Vite with React 19 and React Router as a single-page app, Tailwind CSS v4.",
+  "notFound": "single-page-application",
+  "assetsDir": "/assets/",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "format": "prettier --write ."
+  },
+  "dependencies": ["react", "react-dom", "react-router"],
+  "devDependencies": [
+    "@tailwindcss/vite",
+    "@types/node",
+    "@types/react",
+    "@types/react-dom",
+    "@vitejs/plugin-react",
+    "prettier",
+    "tailwindcss",
+    "typescript",
+    "vite"
+  ],
+  "allowBuilds": ["esbuild"],
+  "agents": {
+    "boundaries": [
+      "The app is hidden from search: `index.html` carries `noindex`. A page that should be found belongs on a separate Astro site."
+    ],
+    "pitfalls": []
+  },
+  "docs": [
+    {
+      "label": "Vite guide",
+      "url": "https://vite.dev/guide/"
+    },
+    {
+      "label": "React Router (declarative mode)",
+      "url": "https://reactrouter.com/start/declarative/installation"
+    },
+    {
+      "label": "Tailwind CSS v4 theme variables",
+      "url": "https://tailwindcss.com/docs/theme"
+    }
+  ]
+}

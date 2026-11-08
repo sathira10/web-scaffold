@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schemas/module.schema.json",
+  "description": "Checks the built HTML after every build: one main and h1, unique ids, CSP hashes and no unsafe-inline, noindex and sitemap agree, canonicals, local links, and no starter text left in.",
+  "frameworks": ["astro"],
+  "requires": ["quality"],
+  "scripts": {
+    "check:site": "node scripts/check-site.mjs"
+  },
+  "checkSteps": ["check:site"],
+  "docs": [
+    {
+      "label": "Astro CSP config",
+      "url": "https://docs.astro.build/en/reference/configuration-reference/#securitycsp"
+    }
+  ]
+}

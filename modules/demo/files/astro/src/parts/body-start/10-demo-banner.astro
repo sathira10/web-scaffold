@@ -1,0 +1,55 @@
+---
+// Demo module. `create.mjs go-live` deletes this file.
+import { site } from "@/data/site";
+---
+
+{
+  site.demo && (
+    <div
+      role="region"
+      aria-label="Demo notice"
+      data-demo-banner-root
+      class="bg-accent-soft text-fg [[data-demo-banner=closed]_&]:hidden"
+    >
+      <div class="flex wrap items-center justify-between gap-4 py-1 text-small">
+        <p>
+          <strong class="font-bold">Demo website.</strong> A preview for {site.name}, not the live
+          site.
+        </p>
+        <button
+          type="button"
+          data-demo-banner-close
+          data-key={`${site.slug}:demo-banner`}
+          aria-label="Close demo notice"
+          class="inline-flex size-11 shrink-0 items-center justify-center rounded-sm hover:bg-surface-raised"
+        >
+          <svg
+            aria-hidden="true"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          >
+            <path d="M6 6l12 12M18 6L6 18" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  )
+}
+
+<script>
+  for (const button of document.querySelectorAll<HTMLButtonElement>("[data-demo-banner-close]")) {
+    button.addEventListener("click", () => {
+      document.documentElement.dataset.demoBanner = "closed";
+      try {
+        window.localStorage.setItem(button.dataset.key ?? "", "1");
+      } catch {
+        // Storage blocked: the banner comes back on the next page.
+      }
+    });
+  }
+</script>

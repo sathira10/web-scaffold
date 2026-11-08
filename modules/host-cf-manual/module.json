@@ -1,0 +1,51 @@
+{
+  "$schema": "../../schemas/module.schema.json",
+  "description": "Cloudflare Workers static assets, deployed by hand with `pnpm deploy`. The default for demos.",
+  "frameworks": ["astro", "vite"],
+  "conflicts": ["host-cf-git", "host-firebase"],
+  "scripts": {
+    "deploy": "pnpm build && wrangler deploy"
+  },
+  "devDependencies": ["wrangler"],
+  "allowBuilds": ["esbuild", "workerd"],
+  "wranglerNotes": [
+    "Cloudflare Workers serving the built site as static assets. Deployed by hand (DEPLOYING.md).",
+    "Response headers for assets live in public/_headers."
+  ],
+  "wrangler": {
+    "$schema": "node_modules/wrangler/config-schema.json",
+    "name": "__SLUG__",
+    "compatibility_date": "__COMPAT_DATE__",
+    "assets": {
+      "directory": "./dist/",
+      "not_found_handling": "__NOT_FOUND__"
+    },
+    "observability": {
+      "enabled": true
+    }
+  },
+  "agents": {
+    "pitfalls": [
+      "Environment blocks in `wrangler.jsonc` don't inherit `vars` or bindings. Repeat them in each environment."
+    ]
+  },
+  "manual": ["Run `pnpm wrangler login`, then `pnpm deploy` (DEPLOYING.md)."],
+  "docs": [
+    {
+      "label": "Workers static assets",
+      "url": "https://developers.cloudflare.com/workers/static-assets/"
+    },
+    {
+      "label": "Wrangler commands",
+      "url": "https://developers.cloudflare.com/workers/wrangler/commands/"
+    },
+    {
+      "label": "_headers",
+      "url": "https://developers.cloudflare.com/workers/static-assets/headers/"
+    },
+    {
+      "label": "Custom domains",
+      "url": "https://developers.cloudflare.com/workers/configuration/routing/custom-domains/"
+    }
+  ]
+}

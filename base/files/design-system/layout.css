@@ -1,0 +1,113 @@
+/*
+ * Layout primitives: the structure every page is built from. They read the tokens only, so a
+ * new design system changes how they look without touching a page. Use them as classes in
+ * .astro and .tsx files alike; add Tailwind utilities beside them for one-off adjustments.
+ *
+ *   wrap, wrap-narrow, wrap-wide   centered column with gutters (content, reading, full layouts)
+ *   section                        vertical rhythm between page bands
+ *   stack, stack-sm, stack-lg      vertical flow with a consistent gap
+ *   cluster                        a wrapping row of items (buttons, tags, nav links)
+ *   grid-auto                      as many equal columns as fit, one column on a phone
+ *   prose                          long-form text: measure, rhythm, underlined links
+ */
+
+@utility wrap {
+  width: 100%;
+  max-width: var(--container-content);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+@utility wrap-narrow {
+  width: 100%;
+  max-width: var(--container-narrow);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+@utility wrap-wide {
+  width: 100%;
+  max-width: var(--container-wide);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+@utility section {
+  padding-block: var(--space-section);
+}
+
+@utility stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@utility stack-sm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+@utility stack-lg {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+@utility cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+}
+
+@utility grid-auto {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
+  gap: 2rem;
+}
+
+@utility prose {
+  max-width: var(--container-prose);
+
+  & > * + * {
+    margin-top: 1em;
+  }
+
+  & > :is(h2, h3) {
+    max-width: 24ch;
+    margin-top: 2em;
+  }
+
+  & > h2 {
+    font-size: var(--text-h2);
+    line-height: var(--text-h2--line-height);
+  }
+
+  & > h3 {
+    font-size: var(--text-h3);
+    line-height: var(--text-h3--line-height);
+  }
+
+  & > :is(ul, ol) {
+    padding-left: 1.25em;
+  }
+
+  & > ul {
+    list-style: disc;
+  }
+
+  & > ol {
+    list-style: decimal;
+  }
+
+  & a {
+    color: var(--fg);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  & a:hover {
+    color: var(--fg-soft);
+  }
+}

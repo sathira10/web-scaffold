@@ -1,0 +1,59 @@
+---
+import { Image } from "astro:assets";
+import { pictures, type PictureKey } from "@/data/pictures";
+import { site } from "@/data/site";
+
+// Crop ratios as classes: the CSP blocks style attributes. Wide crops become a sliver on a
+// phone, so 21/9 starts at 3/2 and widens from md.
+const ratios = {
+  "3/2": "aspect-[3/2]",
+  "4/3": "aspect-[4/3]",
+  "16/9": "aspect-video",
+  "21/9": "aspect-[3/2] md:aspect-[21/9]",
+  "4/5": "aspect-[4/5]",
+  "1/1": "aspect-square",
+};
+
+interface Props {
+  name: PictureKey;
+  ratio?: keyof typeof ratios;
+  /** Rendered width hint for responsive sizes. */
+  sizes?: string;
+  caption?: boolean;
+  /** Above the fold: load at once, with high priority. */
+  eager?: boolean;
+  class?: string;
+}
+
+const {
+  name,
+  ratio = "3/2",
+  sizes = "(min-width: 1024px) 960px, 100vw",
+  caption = true,
+  eager = false,
+  class: className,
+} = Astro.props;
+const picture = pictures[name];
+---
+
+<figure class={className}>
+  <div class:list={["relative overflow-hidden bg-surface", ratios[ratio]]}>
+    <Image
+      src={picture.src}
+      alt={picture.alt}
+      widths={[640, 960, 1280, 1920]}
+      sizes={sizes}
+      loading={eager ? "eager" : "lazy"}
+      fetchpriority={eager ? "high" : undefined}
+      class="absolute inset-0 size-full object-cover"
+    />
+    {
+      site.demo && picture.sample && (
+        <span class="absolute top-2 left-2 rounded-sm bg-fg px-2 py-1 text-small font-bold text-bg">
+          Sample image
+        </span>
+      )
+    }
+  </div>
+  {caption && picture.caption && <figcaption class="pt-3 text-small text-fg-muted">{picture.caption}</figcaption>}
+</figure>

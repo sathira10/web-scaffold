@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "web-scaffold personal config",
+  "description": "Your defaults. Edit this file when you fork.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "devRoot": { "type": "string", "description": "Projects go in <devRoot>/<group>/<slug>." },
+    "groups": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Folders under devRoot the skill suggests (clients, products)."
+    },
+    "locale": { "type": "string", "description": "Default --locale, a BCP 47 tag." },
+    "localNotes": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Partials from base/templates/local/ written into every CLAUDE.local.md."
+    },
+    "git": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "branch": { "type": "string" },
+        "commitMessage": { "type": "string", "description": "{kind} is replaced." },
+        "githubVisibility": { "enum": ["private", "public", "internal"] }
+      }
+    }
+  }
+}

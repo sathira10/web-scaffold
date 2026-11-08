@@ -1,0 +1,36 @@
+/* Dark theme (dark-theme module). Follows the system setting unless data-theme on <html>
+   overrides it either way. Keep both blocks the same. Grayscale like the light set, with
+   red only for danger. Dark is not an inversion: check every pair with the contrast test. */
+:root[data-theme="dark"] {
+  --bg: #111111;
+  --surface: #1a1a1a;
+  --surface-raised: #222222;
+  --fg: #f2f2f2;
+  --fg-soft: #cccccc;
+  --fg-muted: #a3a3a3;
+  --line: #2e2e2e;
+  --line-strong: #767676;
+  --accent: #f2f2f2;
+  --accent-hover: #d4d4d4;
+  --accent-soft: #2a2a2a;
+  --accent-fg: #111111;
+  --danger: #f97066;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111111;
+    --surface: #1a1a1a;
+    --surface-raised: #222222;
+    --fg: #f2f2f2;
+    --fg-soft: #cccccc;
+    --fg-muted: #a3a3a3;
+    --line: #2e2e2e;
+    --line-strong: #767676;
+    --accent: #f2f2f2;
+    --accent-hover: #d4d4d4;
+    --accent-soft: #2a2a2a;
+    --accent-fg: #111111;
+    --danger: #f97066;
+  }
+}

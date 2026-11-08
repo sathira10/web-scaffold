@@ -1,0 +1,7 @@
+{
+  "env": "PUBLIC_META_PIXEL_ID",
+  "pattern": "^\\d+$",
+  "script": ["https://connect.facebook.net"],
+  "connect": ["https://www.facebook.com", "https://connect.facebook.net"],
+  "img": ["https://www.facebook.com"]
+}

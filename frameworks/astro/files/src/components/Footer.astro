@@ -1,0 +1,25 @@
+---
+import { site } from "@/data/site";
+import { inOrder } from "@/lib/parts";
+
+const links = inOrder(import.meta.glob("../parts/footer/*.astro", { eager: true }));
+---
+
+<footer class="mt-16 border-t border-line bg-surface">
+  <div
+    class="flex wrap flex-wrap items-center justify-between gap-4 py-8 text-small text-fg-muted"
+  >
+    <p>&copy; {new Date().getFullYear()} {site.name}</p>
+    {
+      links.length > 0 && (
+        <ul class="flex flex-wrap gap-x-4">
+          {links.map((Part) => (
+            <li>
+              <Part />
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</footer>

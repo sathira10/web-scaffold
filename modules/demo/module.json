@@ -1,0 +1,24 @@
+{
+  "$schema": "../../schemas/module.schema.json",
+  "description": "Demo build: every page noindex, robots.txt disallows all, no sitemap, X-Robots-Tag header, a closable demo banner and sample-image badges. Retired by go-live.",
+  "frameworks": ["astro"],
+  "siteFlags": {
+    "demo": true
+  },
+  "agents": {
+    "boundaries": [
+      "This is a demo build (`demo: true` in `src/data/site.ts`). It must stay out of search: never remove the noindex, robots or banner logic by hand. `node <web-scaffold>/create.mjs go-live` takes it live.",
+      "Sample content (stock photos, stand-in text) is fine in a demo, but mark it: `Picture` adds a \"Sample image\" badge, and `Placeholder` stands in for missing media. Track each one in the open items."
+    ]
+  },
+  "manual": [
+    "Before showing the client, replace stand-in text you can confirm and list the rest in the open items.",
+    "To launch: `node <web-scaffold>/create.mjs go-live --url https://... --email ... --hosting cf-git`."
+  ],
+  "docs": [
+    {
+      "label": "Block search indexing (noindex, X-Robots-Tag)",
+      "url": "https://developers.google.com/search/docs/crawling-indexing/block-indexing"
+    }
+  ]
+}

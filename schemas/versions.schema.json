@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "web-scaffold versions",
+  "description": "Every version a generated project uses. Update with `pnpm versions:bump`; take a new major by hand.",
+  "type": "object",
+  "required": ["node", "pnpm", "cloudflareCompatibilityDate", "actions", "packages"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "node": {
+      "type": "object",
+      "required": ["lts", "min"],
+      "additionalProperties": false,
+      "properties": {
+        "lts": { "type": "string", "description": "Active LTS major, written to .nvmrc." },
+        "min": { "type": "string", "description": "Oldest major in engines.node." }
+      }
+    },
+    "pnpm": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "cloudflareCompatibilityDate": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "actions": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["repo", "ref", "sha"],
+        "additionalProperties": false,
+        "properties": {
+          "repo": { "type": "string" },
+          "ref": { "type": "string" },
+          "sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" }
+        }
+      }
+    },
+    "packages": {
+      "type": "object",
+      "additionalProperties": { "type": "string", "pattern": "^[\\^~]\\d+\\.\\d+\\.\\d+$" }
+    },
+    "holds": {
+      "type": "object",
+      "description": "Packages kept off their newest major. pnpm outdated may list only these.",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["reason"],
+        "additionalProperties": false,
+        "properties": {
+          "reason": { "type": "string" },
+          "blockedBy": { "type": "array", "items": { "type": "string" } },
+          "follows": { "enum": ["node.lts"] }
+        }
+      }
+    },
+    "overrides": {
+      "type": "object",
+      "description": "pnpm overrides, keyed by pnpm selector.",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["version", "reason"],
+        "additionalProperties": false,
+        "properties": {
+          "version": { "type": "string" },
+          "reason": { "type": "string" },
+          "frameworks": { "type": "array", "items": { "enum": ["astro", "vite"] } },
+          "modules": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "auditIgnore": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "reason", "expires"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "description": "GHSA id." },
+          "reason": { "type": "string" },
+          "expires": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" }
+        }
+      }
+    }
+  }
+}

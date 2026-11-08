@@ -1,0 +1,27 @@
+{
+  "$schema": "../../schemas/module.schema.json",
+  "description": "Dark theme: dark tokens that follow the system setting, a header toggle that saves the choice, and theme.js so the saved choice applies before first paint.",
+  "frameworks": ["astro"],
+  "append": {
+    "design-system/tokens.css": "append/tokens-dark.css",
+    "src/styles/global.css": "append/global-dark.css"
+  },
+  "agents": {
+    "boundaries": [
+      "Every color token has a light and a dark value. Check a new pair in both themes (the contrast test reads both)."
+    ]
+  },
+  "manual": [
+    "Tune the dark values in `design-system/tokens.css` (both blocks) and run `pnpm test` for contrast."
+  ],
+  "docs": [
+    {
+      "label": "color-scheme",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme"
+    },
+    {
+      "label": "Tailwind dark mode",
+      "url": "https://tailwindcss.com/docs/dark-mode"
+    }
+  ]
+}

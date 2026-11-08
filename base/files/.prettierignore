@@ -1,0 +1,12 @@
+dist
+.astro
+.wrangler
+.firebase
+pnpm-lock.yaml
+worker-configuration.d.ts
+coverage
+test-results
+playwright-report
+.audit
+.taste-skill
+.scaffold.json

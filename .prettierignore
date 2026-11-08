@@ -1,0 +1,7 @@
+pnpm-lock.yaml
+# Template files are formatted by each project's own Prettier after create.
+base/files
+base/templates
+frameworks/*/files
+modules/*/files
+modules/*/append

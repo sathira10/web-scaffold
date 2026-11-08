@@ -1,0 +1,19 @@
+{
+  "$schema": "../../schemas/module.schema.json",
+  "description": "Responsive pictures: a `Picture` component on astro:assets, a typed registry with credits and a /credits page, and a `Placeholder` for missing media.",
+  "frameworks": ["astro"],
+  "agents": {
+    "boundaries": [
+      "Every image goes through `src/data/pictures.ts` with its credit, and is shown with `<Picture>`. Never hotlink an image or use one without a license that allows it."
+    ]
+  },
+  "manual": [
+    "Replace `src/assets/pictures/sample.jpg` with real pictures and record each credit in `src/data/pictures.ts`."
+  ],
+  "docs": [
+    {
+      "label": "Astro images",
+      "url": "https://docs.astro.build/en/guides/images/"
+    }
+  ]
+}

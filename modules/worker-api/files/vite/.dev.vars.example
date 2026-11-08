@@ -1,0 +1,3 @@
+# Local secrets for `pnpm dev`. Copy to .dev.vars. Deployed secrets are set with
+# `pnpm wrangler secret put NAME`, never in wrangler.jsonc. Generate one: openssl rand -base64 32
+# EXAMPLE_SECRET=

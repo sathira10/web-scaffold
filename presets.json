@@ -1,0 +1,70 @@
+{
+  "$schema": "./schemas/presets.schema.json",
+  "moduleOrder": [
+    "quality",
+    "design-system",
+    "host-cf-git",
+    "host-cf-manual",
+    "host-firebase",
+    "demo",
+    "images",
+    "analytics",
+    "contact-form",
+    "blog",
+    "dark-theme",
+    "ui-kit",
+    "check-site",
+    "e2e",
+    "ci",
+    "plans-in-repo",
+    "worker-api",
+    "d1"
+  ],
+  "kinds": {
+    "demo": {
+      "label": "Client demo",
+      "framework": "astro",
+      "summary": "A site built to show a client. Hidden from search, sample-content badges, no analytics, deployed by hand. Promote it with go-live.",
+      "modules": ["quality", "design-system", "host-cf-manual", "demo", "images"],
+      "optional": ["contact-form", "blog", "dark-theme", "check-site", "e2e", "ui-kit"]
+    },
+    "marketing": {
+      "label": "Production marketing site",
+      "framework": "astro",
+      "summary": "A public site that search should find: SEO, sitemap, built-site checks, browser tests, CI and Git deploys.",
+      "modules": ["quality", "design-system", "host-cf-git", "images", "check-site", "e2e", "ci"],
+      "optional": ["analytics", "contact-form", "blog", "dark-theme", "ui-kit"]
+    },
+    "content": {
+      "label": "Content or docs site",
+      "framework": "astro",
+      "summary": "A marketing site plus a Markdown collection for posts or docs.",
+      "modules": [
+        "quality",
+        "design-system",
+        "host-cf-git",
+        "images",
+        "blog",
+        "check-site",
+        "e2e",
+        "ci"
+      ],
+      "optional": ["analytics", "contact-form", "dark-theme", "ui-kit"]
+    },
+    "app": {
+      "label": "App",
+      "framework": "vite",
+      "summary": "Screens people work in, hidden from search. Optional Worker API and D1 database.",
+      "modules": ["quality", "design-system", "host-cf-git", "e2e", "ci"],
+      "optional": ["worker-api", "d1", "ui-kit"]
+    },
+    "scratch": {
+      "label": "Scratch",
+      "framework": "vite",
+      "summary": "A test bed for an idea (web audio, a library). Dev, build and format only. No CI, no tests, no agent docs beyond CLAUDE.local.md.",
+      "modules": [],
+      "optional": ["quality", "host-cf-manual"],
+      "agentDocs": false
+    }
+  }
+}

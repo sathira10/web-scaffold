@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "web-scaffold framework",
+  "description": "frameworks/<name>/framework.json. Files go in files/.",
+  "type": "object",
+  "required": [
+    "label",
+    "stack",
+    "notFound",
+    "assetsDir",
+    "scripts",
+    "dependencies",
+    "devDependencies",
+    "docs"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "label": { "type": "string" },
+    "stack": { "type": "string", "description": "One sentence for AGENTS.md." },
+    "notFound": {
+      "enum": ["404-page", "single-page-application"],
+      "description": "Cloudflare not_found_handling."
+    },
+    "assetsDir": { "type": "string" },
+    "scripts": { "type": "object", "additionalProperties": { "type": "string" } },
+    "dependencies": { "$ref": "module.schema.json#/$defs/names" },
+    "devDependencies": { "$ref": "module.schema.json#/$defs/names" },
+    "allowBuilds": { "type": "array", "items": { "type": "string" } },
+    "agents": { "$ref": "module.schema.json#/$defs/agents" },
+    "docs": { "$ref": "module.schema.json#/$defs/docs" }
+  }
+}

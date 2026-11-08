@@ -1,0 +1,36 @@
+---
+import Base from "@/layouts/Base.astro";
+import { site } from "@/data/site";
+import { formatDate, publishedPosts } from "@/lib/posts";
+
+const posts = await publishedPosts();
+---
+
+<Base title="Blog" path="/blog">
+  <section class="mx-auto max-w-prose px-4 py-16">
+    <h1 class="text-h1 font-bold">Blog</h1>
+    {
+      posts.length ? (
+        <ul class="mt-8 flex flex-col gap-8">
+          {posts.map((post) => (
+            <li>
+              <h2 class="text-h3 font-bold">
+                <a class="underline underline-offset-4 hover:text-accent" href={`/blog/${post.id}`}>
+                  {post.data.title}
+                </a>
+              </h2>
+              <p class="mt-1 text-small text-fg-muted">
+                <time datetime={post.data.date.toISOString()}>
+                  {formatDate(post.data.date, site.locale)}
+                </time>
+              </p>
+              <p class="mt-2 text-fg-soft">{post.data.description}</p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="mt-8 text-fg-soft">No posts yet.</p>
+      )
+    }
+  </section>
+</Base>

@@ -1,0 +1,15 @@
+---
+import Base from "@/layouts/Base.astro";
+import { site } from "@/data/site";
+---
+
+<Base title="Privacy" path="/privacy">
+  <article class="mx-auto max-w-prose px-4 py-16">
+    <h1 class="text-h1 font-bold">Privacy</h1>
+    <!-- Replace with a real policy that names each service this site uses. Track it in the open items. -->
+    <p class="mt-4 text-fg-soft">
+      Questions about your data:
+      <a class="underline underline-offset-4" href={`mailto:${site.email}`}>{site.email}</a>.
+    </p>
+  </article>
+</Base>

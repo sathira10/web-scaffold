@@ -1,0 +1,12 @@
+{
+  "$schema": "./schemas/config.schema.json",
+  "devRoot": "~/dev",
+  "groups": ["clients", "products", "personal"],
+  "locale": "en-US",
+  "localNotes": ["git", "writing"],
+  "git": {
+    "branch": "main",
+    "commitMessage": "chore: scaffold {kind} project from web-scaffold",
+    "githubVisibility": "private"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "../../schemas/module.schema.json",
+  "description": "Analytics in two tiers: cookieless Cloudflare Web Analytics for everyone, and GA4 or Meta Pixel only after consent. Each one turns on when its env variable is set.",
+  "frameworks": ["astro"],
+  "conflicts": ["demo"],
+  "env": [
+    "# Analytics. Leave a value empty and that service ships nothing.",
+    "# Cookieless, no consent needed (Cloudflare dashboard, Web Analytics, add site, JS snippet token):",
+    "PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN=",
+    "# Cookie-setting, loaded only after the visitor allows it:",
+    "PUBLIC_GA_MEASUREMENT_ID=",
+    "PUBLIC_META_PIXEL_ID="
+  ],
+  "agents": {
+    "boundaries": [
+      "Cookie-setting analytics load only after consent (`src/lib/analytics.ts`). Never add a tracker that bypasses it; a new provider gets a file in `config/csp/` and a line in the privacy page."
+    ],
+    "pitfalls": [
+      "gtag.js only reads `arguments` objects from `dataLayer`. A rest-parameter array is pushed but never sent; keep the `arguments` push in `initGoogle`."
+    ]
+  },
+  "manual": [
+    "Set the analytics IDs in `.env` and as build variables on the host, then check in the browser that hits send only after consent.",
+    "Write the privacy page (`src/pages/privacy.astro`) naming each service."
+  ],
+  "docs": [
+    {
+      "label": "Cloudflare Web Analytics",
+      "url": "https://developers.cloudflare.com/web-analytics/"
+    },
+    {
+      "label": "GA4 gtag.js setup",
+      "url": "https://developers.google.com/tag-platform/gtagjs/install"
+    },
+    {
+      "label": "Google consent mode",
+      "url": "https://developers.google.com/tag-platform/security/guides/consent"
+    },
+    {
+      "label": "Meta Pixel",
+      "url": "https://developers.facebook.com/docs/meta-pixel/get-started"
+    }
+  ]
+}

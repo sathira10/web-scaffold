@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "web-scaffold presets",
+  "type": "object",
+  "required": ["moduleOrder", "kinds"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "moduleOrder": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Every module, in the order they're applied. A later module's file replaces an earlier one's."
+    },
+    "kinds": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["label", "framework", "summary", "modules"],
+        "additionalProperties": false,
+        "properties": {
+          "label": { "type": "string" },
+          "framework": { "enum": ["astro", "vite"] },
+          "summary": { "type": "string" },
+          "modules": { "type": "array", "items": { "type": "string" } },
+          "optional": { "type": "array", "items": { "type": "string" } },
+          "agentDocs": { "type": "boolean", "description": "false: only CLAUDE.local.md." }
+        }
+      }
+    }
+  }
+}

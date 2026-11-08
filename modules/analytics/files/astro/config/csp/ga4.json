@@ -1,0 +1,11 @@
+{
+  "env": "PUBLIC_GA_MEASUREMENT_ID",
+  "pattern": "^G-[A-Z0-9]+$",
+  "script": ["https://www.googletagmanager.com"],
+  "connect": [
+    "https://*.google-analytics.com",
+    "https://*.analytics.google.com",
+    "https://*.googletagmanager.com"
+  ],
+  "img": ["https://*.google-analytics.com", "https://*.googletagmanager.com"]
+}

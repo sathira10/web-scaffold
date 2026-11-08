@@ -1,0 +1,59 @@
+{
+  "$schema": "../../schemas/module.schema.json",
+  "description": "One Cloudflare Worker serves the SPA and a Hono API under /api (run_worker_first), with security headers on API responses, Worker tests in workerd and generated Env types.",
+  "frameworks": ["vite"],
+  "requires": ["quality"],
+  "requiresAny": [["host-cf-git", "host-cf-manual"]],
+  "dependencies": ["hono"],
+  "devDependencies": ["@cloudflare/vite-plugin", "@cloudflare/vitest-plugin", "vitest"],
+  "allowBuilds": ["esbuild", "workerd"],
+  "scripts": {
+    "typecheck": "wrangler types --check && tsc -b",
+    "types:worker": "wrangler types"
+  },
+  "after": ["pnpm types:worker"],
+  "wranglerNotes": [
+    "The Worker (src/worker) answers /api/* first; every other path is a static asset, and",
+    "unknown paths get index.html so client routes work on reload. Never put private files in",
+    "public/: they would be served to anyone."
+  ],
+  "wrangler": {
+    "main": "src/worker/index.ts",
+    "compatibility_flags": ["nodejs_compat"],
+    "assets": {
+      "directory": null,
+      "run_worker_first": ["/api/*"]
+    }
+  },
+  "agents": {
+    "boundaries": [
+      "API routes live in `src/worker/routes/` under `/api`. Types shared with the client go in `src/shared/`.",
+      "Secrets go in `.dev.vars` locally and `wrangler secret put` when deployed. Never in `wrangler.jsonc` `vars`, a `PUBLIC_*` variable or the client bundle."
+    ],
+    "pitfalls": [
+      "After changing bindings in `wrangler.jsonc`, run `pnpm types:worker`; `pnpm typecheck` fails until `worker-configuration.d.ts` matches."
+    ]
+  },
+  "docs": [
+    {
+      "label": "Hono on Cloudflare Workers",
+      "url": "https://hono.dev/docs/getting-started/cloudflare-workers"
+    },
+    {
+      "label": "Hono secure headers",
+      "url": "https://hono.dev/docs/middleware/builtin/secure-headers"
+    },
+    {
+      "label": "Cloudflare Vite plugin",
+      "url": "https://developers.cloudflare.com/workers/vite-plugin/"
+    },
+    {
+      "label": "Workers Vitest integration",
+      "url": "https://developers.cloudflare.com/workers/testing/vitest-integration/"
+    },
+    {
+      "label": "SPA routing on Workers",
+      "url": "https://developers.cloudflare.com/workers/static-assets/routing/single-page-application/"
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+/*
+ * Design tokens: the one place visual values are written. Components use the semantic names
+ * only (bg-surface, text-fg, border-line, bg-accent). Raw color values live in this file and
+ * nowhere else; `pnpm check:tokens` enforces that.
+ *
+ *   1. :root          raw values
+ *   2. @theme inline  maps them to Tailwind utilities
+ *
+ * Tailwind v4 reserves --text-* for font sizes and --color-* for colors, so semantic text
+ * colors are named fg-*, never text-*.
+ *
+ * These are the neutral defaults: grayscale, system fonts, one red for errors. They are meant to
+ * ship as they are until a real design system arrives. When it does, change the values and keep
+ * every name: components, design-system/layout.css and the contrast test depend on them.
+ */
+
+:root {
+  /* Grounds, from the page outward. Depth comes from these steps, not from shadows. */
+  --bg: #ffffff;
+  --surface: #f5f5f5;
+  --surface-raised: #ffffff;
+
+  /* Text, strongest to weakest. All three reach 4.5:1 on every ground. */
+  --fg: #171717;
+  --fg-soft: #404040;
+  --fg-muted: #5c5c5c;
+
+  /* Hairlines between areas; line-strong is for field borders (3:1). */
+  --line: #e5e5e5;
+  --line-strong: #8a8a8a;
+
+  /* The accent is near-black: interactive elements only, never decoration. */
+  --accent: #171717;
+  --accent-hover: #404040;
+  --accent-soft: #ebebeb;
+  --accent-fg: #ffffff;
+
+  /* The only hue. Errors and destructive actions, always with words, never color alone. */
+  --danger: #b42318;
+
+  --radius: 0.25rem;
+
+  --font-body: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-heading: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-data: ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Page edge padding and the space between sections (layout.css). */
+  --gutter: 1rem;
+  --space-section: 4rem;
+
+  /* Motion: color and opacity changes only. Reduced motion removes them (global.css). */
+  --duration-fast: 120ms;
+  --duration: 200ms;
+}
+
+@media (min-width: 40rem) {
+  :root {
+    --gutter: 1.5rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --space-section: 6rem;
+  }
+}
+
+@theme inline {
+  /* Remove Tailwind's default palette: only the roles below exist. */
+  --color-*: initial;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-fg: var(--fg);
+  --color-fg-soft: var(--fg-soft);
+  --color-fg-muted: var(--fg-muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-fg: var(--accent-fg);
+  --color-danger: var(--danger);
+
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 4px);
+
+  --font-sans: var(--font-body);
+  --font-heading: var(--font-heading);
+  --font-mono: var(--font-data);
+
+  /* Widths: max-w-prose, max-w-narrow, max-w-content, max-w-wide (and the wrap-* classes). */
+  --container-prose: 65ch;
+  --container-narrow: 46rem;
+  --container-content: 64rem;
+  --container-wide: 80rem;
+
+  /* ease-standard: the one easing curve, for transitions on color and opacity. */
+  --ease-standard: cubic-bezier(0.25, 0.1, 0.25, 1);
+
+  /* Type scale. Hard jumps, not nudges. The body floor is 16px. */
+  --text-display: clamp(2.5rem, 6vw, 4.5rem);
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.025em;
+  --text-h1: clamp(2rem, 4vw, 3rem);
+  --text-h1--line-height: 1.1;
+  --text-h1--letter-spacing: -0.015em;
+  --text-h2: clamp(1.5rem, 3vw, 2rem);
+  --text-h2--line-height: 1.2;
+  --text-h3: 1.25rem;
+  --text-h3--line-height: 1.3;
+  --text-lead: 1.25rem;
+  --text-lead--line-height: 1.5;
+  --text-body: 1rem;
+  --text-body--line-height: 1.6;
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.5;
+}

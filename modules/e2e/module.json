@@ -1,0 +1,25 @@
+{
+  "$schema": "../../schemas/module.schema.json",
+  "description": "Playwright browser tests on the built output: no sideways scroll at six widths, light and dark, 150-200% text and forced colors, plus axe (WCAG 2.2 AA).",
+  "frameworks": ["astro", "vite"],
+  "requires": ["quality"],
+  "scripts": {
+    "test:e2e": "playwright test",
+    "audit:matrix": "AUDIT_LABEL=${AUDIT_LABEL:-latest} playwright test tests/e2e/matrix.spec.ts"
+  },
+  "devDependencies": ["@axe-core/playwright", "@playwright/test"],
+  "agents": {
+    "boundaries": ["Add every new page or route to `tests/e2e/routes.ts`."]
+  },
+  "manual": ["Run `pnpm exec playwright install chromium` once, then `pnpm test:e2e`."],
+  "docs": [
+    {
+      "label": "Playwright",
+      "url": "https://playwright.dev/docs/intro"
+    },
+    {
+      "label": "Accessibility tests with axe",
+      "url": "https://playwright.dev/docs/accessibility-testing"
+    }
+  ]
+}

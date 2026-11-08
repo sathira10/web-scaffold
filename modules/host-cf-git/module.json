@@ -1,0 +1,55 @@
+{
+  "$schema": "../../schemas/module.schema.json",
+  "description": "Cloudflare Workers static assets deployed by Workers Builds: main deploys, every branch gets a preview URL.",
+  "frameworks": ["astro", "vite"],
+  "conflicts": ["host-cf-manual", "host-firebase"],
+  "scripts": {
+    "deploy": "pnpm build && wrangler deploy"
+  },
+  "devDependencies": ["wrangler"],
+  "allowBuilds": ["esbuild", "workerd"],
+  "wranglerNotes": [
+    "Cloudflare Workers serving the built site as static assets. One Worker: Workers Builds deploys",
+    "main to production and uploads preview versions for other branches (DEPLOYING.md).",
+    "Response headers for assets live in public/_headers."
+  ],
+  "wrangler": {
+    "$schema": "node_modules/wrangler/config-schema.json",
+    "name": "__SLUG__",
+    "compatibility_date": "__COMPAT_DATE__",
+    "assets": {
+      "directory": "./dist/",
+      "not_found_handling": "__NOT_FOUND__"
+    },
+    "preview_urls": true,
+    "observability": {
+      "enabled": true
+    }
+  },
+  "agents": {
+    "pitfalls": [
+      "Environment blocks in `wrangler.jsonc` don't inherit `vars` or bindings. Repeat them in each environment."
+    ]
+  },
+  "manual": [
+    "Push to GitHub, deploy once with `pnpm deploy`, then connect the repo in Workers Builds (DEPLOYING.md)."
+  ],
+  "docs": [
+    {
+      "label": "Workers static assets",
+      "url": "https://developers.cloudflare.com/workers/static-assets/"
+    },
+    {
+      "label": "Workers Builds",
+      "url": "https://developers.cloudflare.com/workers/ci-cd/builds/"
+    },
+    {
+      "label": "Preview URLs",
+      "url": "https://developers.cloudflare.com/workers/configuration/previews/"
+    },
+    {
+      "label": "Custom domains",
+      "url": "https://developers.cloudflare.com/workers/configuration/routing/custom-domains/"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "../../schemas/module.schema.json",
+  "description": "Blog or news: a Markdown content collection, a list page and post pages with dates and breadcrumbs. Drafts build in dev only.",
+  "frameworks": ["astro"],
+  "nav": [
+    {
+      "href": "/blog",
+      "label": "Blog"
+    }
+  ],
+  "agents": {
+    "boundaries": [
+      "Posts are Markdown in `src/content/posts/`. Code blocks use Prism classes; never switch to Shiki, which writes inline styles the CSP blocks."
+    ]
+  },
+  "manual": [
+    "Write the first real post in `src/content/posts/` and delete `first-post.md`. Rename `/blog` to `/news` (folder, nav item) if that suits the site."
+  ],
+  "docs": [
+    {
+      "label": "Astro content collections",
+      "url": "https://docs.astro.build/en/guides/content-collections/"
+    }
+  ]
+}

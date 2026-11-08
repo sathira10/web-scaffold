@@ -1,0 +1,25 @@
+{
+  "name": "web-scaffold",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Start websites and web apps from a small base plus tested modules, by hand or with the /new-site Claude skill.",
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@12.18.0",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "test": "node --test tests/unit.test.mjs",
+    "test:presets": "node tests/presets.test.mjs",
+    "test:e2e": "node tests/presets.test.mjs --e2e",
+    "versions:check": "node scripts/versions.mjs check",
+    "versions:bump": "node scripts/versions.mjs bump",
+    "install-skill": "node create.mjs install-skill",
+    "format": "prettier --write .",
+    "lint": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "^3.9.10"
+  }
+}

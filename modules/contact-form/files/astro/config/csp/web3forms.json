@@ -1,0 +1,6 @@
+{
+  "env": "PUBLIC_WEB3FORMS_KEY",
+  "pattern": "^[a-fA-F0-9-]{20,}$",
+  "connect": ["https://api.web3forms.com"],
+  "form": ["https://api.web3forms.com"]
+}

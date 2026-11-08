@@ -1,0 +1,25 @@
+{
+  "$schema": "../../schemas/module.schema.json",
+  "description": "Contact page with a Web3Forms form that works without JavaScript, a honeypot, and a privacy page.",
+  "frameworks": ["astro"],
+  "nav": [
+    {
+      "href": "/contact",
+      "label": "Contact"
+    }
+  ],
+  "env": [
+    "# Web3Forms access key for the contact form. Public by design: restrict it to the site's",
+    "# domain in the Web3Forms dashboard.",
+    "PUBLIC_WEB3FORMS_KEY="
+  ],
+  "manual": [
+    "Create a Web3Forms access key for the client's inbox, restrict it to the domain, and set `PUBLIC_WEB3FORMS_KEY` in `.env` and on the host. Send one test message with JavaScript on and one with it off."
+  ],
+  "docs": [
+    {
+      "label": "Web3Forms docs",
+      "url": "https://docs.web3forms.com/"
+    }
+  ]
+}

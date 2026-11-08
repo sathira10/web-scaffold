@@ -1,0 +1,6 @@
+{
+  "env": "PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN",
+  "pattern": "^[a-fA-F0-9]{32}$",
+  "script": ["https://static.cloudflareinsights.com"],
+  "connect": ["https://cloudflareinsights.com"]
+}

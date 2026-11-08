@@ -1,0 +1,50 @@
+{
+  "$schema": "../../schemas/framework.schema.json",
+  "label": "Astro (static) with React islands",
+  "stack": "Astro (static output) with React islands where a page needs JavaScript, Tailwind CSS v4.",
+  "notFound": "404-page",
+  "assetsDir": "/_astro/",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "format": "prettier --write ."
+  },
+  "dependencies": ["@astrojs/react", "@astrojs/sitemap", "astro", "react", "react-dom"],
+  "devDependencies": [
+    "@tailwindcss/vite",
+    "@types/react",
+    "@types/react-dom",
+    "prettier",
+    "prettier-plugin-astro",
+    "tailwindcss",
+    "typescript",
+    "vite"
+  ],
+  "allowBuilds": ["esbuild", "sharp"],
+  "agents": {
+    "boundaries": [
+      "Never add `unsafe-inline` to the CSP or an inline `<script>` with content that Astro doesn't process. Scripts that must run before paint are files in `public/`.",
+      "Layout additions go in `src/parts/<slot>/` (head, body-start, header-end, footer, body-end), not into `Base.astro`. Modules rely on that."
+    ],
+    "pitfalls": [
+      "Built pages are files (`/about.html`), so `Astro.url.pathname` can end in `.html`. Pass it through `routePath()` from `src/lib/routes.ts` before comparing or building URLs.",
+      "The CSP drops inline `style=` attributes without an error. Use classes; for a value that varies, use a lookup map of classes.",
+      "A third-party origin (embed, API, script) needs a file in `config/csp/`. Without one the browser blocks it."
+    ]
+  },
+  "docs": [
+    {
+      "label": "Astro docs",
+      "url": "https://docs.astro.build/en/getting-started/"
+    },
+    {
+      "label": "Astro CSP config",
+      "url": "https://docs.astro.build/en/reference/configuration-reference/#securitycsp"
+    },
+    {
+      "label": "Tailwind CSS v4 theme variables",
+      "url": "https://tailwindcss.com/docs/theme"
+    }
+  ]
+}

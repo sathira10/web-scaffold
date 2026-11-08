@@ -1,0 +1,32 @@
+{
+  "$schema": "../../schemas/module.schema.json",
+  "description": "Firebase Hosting: firebase.json with clean URLs and security headers, `pnpm deploy`, preview channels.",
+  "frameworks": ["astro", "vite"],
+  "conflicts": ["host-cf-git", "host-cf-manual"],
+  "scripts": {
+    "deploy": "pnpm build && firebase deploy --only hosting",
+    "deploy:preview": "pnpm build && firebase hosting:channel:deploy preview"
+  },
+  "gitignore": [".firebase", "firebase-debug.log"],
+  "manual": [
+    "Install the Firebase CLI (`npm install -g firebase-tools`), run `firebase login`, create the project and check `.firebaserc` (DEPLOYING.md)."
+  ],
+  "docs": [
+    {
+      "label": "Firebase Hosting quickstart",
+      "url": "https://firebase.google.com/docs/hosting/quickstart"
+    },
+    {
+      "label": "firebase.json reference",
+      "url": "https://firebase.google.com/docs/hosting/full-config"
+    },
+    {
+      "label": "Preview channels",
+      "url": "https://firebase.google.com/docs/hosting/test-preview-deploy"
+    },
+    {
+      "label": "GitHub integration",
+      "url": "https://firebase.google.com/docs/hosting/github-integration"
+    }
+  ]
+}

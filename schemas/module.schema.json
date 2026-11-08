@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "web-scaffold module",
+  "description": "modules/<name>/module.json. Files go in files/{common,astro,vite}/.",
+  "type": "object",
+  "required": ["description", "frameworks"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "description": { "type": "string", "description": "One line, shown by `create.mjs list`." },
+    "frameworks": { "type": "array", "items": { "enum": ["astro", "vite"] } },
+    "requires": { "type": "array", "items": { "type": "string" } },
+    "requiresAny": { "type": "array", "items": { "type": "array", "items": { "type": "string" } } },
+    "conflicts": { "type": "array", "items": { "type": "string" } },
+    "scripts": { "type": "object", "additionalProperties": { "type": "string" } },
+    "dependencies": { "$ref": "#/$defs/names" },
+    "devDependencies": { "$ref": "#/$defs/names" },
+    "byFramework": {
+      "type": "object",
+      "description": "Fields that apply to one framework only.",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "scripts": { "type": "object", "additionalProperties": { "type": "string" } },
+          "dependencies": { "$ref": "#/$defs/names" },
+          "devDependencies": { "$ref": "#/$defs/names" }
+        }
+      }
+    },
+    "checkSteps": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Scripts chained into `pnpm check`, in module order."
+    },
+    "allowBuilds": { "type": "array", "items": { "type": "string" } },
+    "env": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Lines for .env.example."
+    },
+    "gitignore": { "type": "array", "items": { "type": "string" } },
+    "wrangler": {
+      "type": "object",
+      "description": "Merged into wrangler.jsonc. null deletes a key."
+    },
+    "wranglerNotes": { "type": "array", "items": { "type": "string" } },
+    "append": {
+      "type": "object",
+      "additionalProperties": { "type": "string" },
+      "description": "Project file -> module file appended to it."
+    },
+    "nav": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["href", "label"],
+        "properties": { "href": { "type": "string" }, "label": { "type": "string" } }
+      }
+    },
+    "siteFlags": { "type": "object", "additionalProperties": { "type": "boolean" } },
+    "after": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Commands run after install."
+    },
+    "agents": { "$ref": "#/$defs/agents" },
+    "manual": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Steps a person must do."
+    },
+    "docs": { "$ref": "#/$defs/docs" }
+  },
+  "$defs": {
+    "names": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Package names. Ranges live in versions.json."
+    },
+    "agents": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "boundaries": { "type": "array", "items": { "type": "string" } },
+        "pitfalls": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "docs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["label", "url"],
+        "additionalProperties": false,
+        "properties": { "label": { "type": "string" }, "url": { "type": "string" } }
+      }
+    }
+  }
+}

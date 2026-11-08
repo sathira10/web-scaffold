@@ -1,0 +1,15 @@
+---
+import { ConsentBanner } from "@/components/ConsentBanner";
+import { hasAnalyticsConfig, hasConsentConfig } from "@/lib/analytics";
+---
+
+{hasConsentConfig() && <ConsentBanner client:only="react" />}
+{
+  hasAnalyticsConfig() && !hasConsentConfig() && (
+    <script>
+      // Cookieless analytics only: nothing to ask, so start at once.
+      import { initAnalytics } from "@/lib/analytics";
+      initAnalytics();
+    </script>
+  )
+}

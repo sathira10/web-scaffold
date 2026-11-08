@@ -1,0 +1,24 @@
+{
+  "$schema": "../../schemas/module.schema.json",
+  "description": "Design system docs and checks: a README describing the neutral default (replaced when a real design system is given), a contrast test over tokens.css, and `pnpm assets` for favicons, icons and the social image.",
+  "frameworks": ["astro", "vite"],
+  "requires": ["quality"],
+  "scripts": {
+    "assets": "node scripts/generate-assets.mjs"
+  },
+  "devDependencies": ["sharp"],
+  "allowBuilds": ["sharp"],
+  "manual": [
+    "The site uses the neutral default design system. To brand it, replace the values in `design-system/tokens.css` and rewrite `design-system/README.md` (the skill can do this from a Claude Design System, another repo or a brief), keeping the token names. Then run `pnpm assets` for icons and the social image."
+  ],
+  "docs": [
+    {
+      "label": "Tailwind CSS v4 theme variables",
+      "url": "https://tailwindcss.com/docs/theme"
+    },
+    {
+      "label": "WCAG contrast minimum",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html"
+    }
+  ]
+}

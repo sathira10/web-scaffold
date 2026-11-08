@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schemas/module.schema.json",
+  "description": "GitHub Actions: `pnpm check` on every push and pull request to main, plus the browser tests when e2e is installed. Actions are pinned to commit SHAs.",
+  "frameworks": ["astro", "vite"],
+  "requires": ["quality"],
+  "docs": [
+    {
+      "label": "GitHub Actions",
+      "url": "https://docs.github.com/en/actions"
+    },
+    {
+      "label": "gh repo create",
+      "url": "https://cli.github.com/manual/gh_repo_create"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "../../schemas/module.schema.json",
+  "description": "shadcn/ui primitives (Button, Input, Textarea, Label) on Radix, wired to the semantic tokens. Opt-in: no project so far kept it by default.",
+  "frameworks": ["astro", "vite"],
+  "dependencies": [
+    "@radix-ui/react-label",
+    "@radix-ui/react-slot",
+    "class-variance-authority",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "append": {
+    "design-system/tokens.css": "append/shadcn-bridge.css"
+  },
+  "agents": {
+    "boundaries": [
+      "UI primitives live in `src/components/ui/`. Add more with `pnpm dlx shadcn add <name>`, then check them against the design system."
+    ]
+  },
+  "docs": [
+    {
+      "label": "shadcn/ui",
+      "url": "https://ui.shadcn.com/docs"
+    },
+    {
+      "label": "Radix primitives",
+      "url": "https://www.radix-ui.com/primitives/docs/overview/introduction"
+    }
+  ]
+}

@@ -24,6 +24,7 @@ scaffold.config.json  personal defaults (dev root, groups, locale, local notes, 
 schemas/              JSON Schemas for the config files above
 scripts/versions.mjs  pnpm versions:check / versions:bump
 skills/new-site/      the Claude skill (SKILL.md + references/)
+docs/                 decisions.md (why), roadmap.md (later)
 tests/                unit.test.mjs (fast), presets.test.mjs (slow), cases.mjs (shared)
 ```
 

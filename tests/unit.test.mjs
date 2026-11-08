@@ -3,11 +3,20 @@
 // --no-install. Run with `pnpm test`. The slow, installing test is tests/presets.test.mjs.
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync } from "node:fs";
+import {
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { after, describe, test } from "node:test";
 import { kinds, presets, ROOT, versions } from "../lib/catalog.mjs";
+import { setSiteString } from "../lib/files.mjs";
 import { checkEmail, checkUrl, replaceTokens } from "../lib/substitute.mjs";
 import { merge, parseJsonc, walk } from "../lib/util.mjs";
 import { cases } from "./cases.mjs";
@@ -177,6 +186,20 @@ describe("helpers", () => {
     assert.equal(checkEmail("hi@acme.test"), "hi@acme.test");
     for (const bad of ["hi", "hi@acme", 'a"b@acme.test', "a b@acme.test"])
       assert.throws(() => checkEmail(bad), /--email/, bad);
+  });
+  test("setSiteString writes a $ in the value literally", () => {
+    const dir = mkdtempSync(join(tmpdir(), "web-scaffold-site-"));
+    try {
+      mkdirSync(join(dir, "src/data"), { recursive: true });
+      writeFileSync(join(dir, "src/data/site.ts"), 'export const site = {\n  email: "x",\n};\n');
+      setSiteString(dir, "email", "a$`$&$'b@acme.test");
+      assert.equal(
+        readFileSync(join(dir, "src/data/site.ts"), "utf8"),
+        'export const site = {\n  email: "a$`$&$\'b@acme.test",\n};\n',
+      );
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
   });
 });
 

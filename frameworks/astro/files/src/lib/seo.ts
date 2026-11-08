@@ -68,6 +68,33 @@ export function breadcrumbJsonLd(trail: { name: string; path: string }[]): Recor
   };
 }
 
+export type ArticleInput = {
+  title: string;
+  description: string;
+  path: string;
+  published: Date;
+  updated?: Date;
+};
+
+/** A blog post or news item. The site is the author and publisher. */
+export function articleJsonLd(article: ArticleInput): Record<string, unknown> {
+  const url = absoluteUrl(article.path);
+  const organization = { "@type": "Organization", name: site.name, url: site.url };
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: article.title,
+    description: article.description,
+    url,
+    mainEntityOfPage: url,
+    datePublished: article.published.toISOString(),
+    dateModified: (article.updated ?? article.published).toISOString(),
+    inLanguage: site.locale,
+    author: organization,
+    publisher: organization,
+  };
+}
+
 export function seo(input: SeoInput = {}): Seo {
   const title = pageTitle(input);
   const description = input.description ?? site.description;

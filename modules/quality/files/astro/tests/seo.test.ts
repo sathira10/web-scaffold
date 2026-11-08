@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { site } from "@/data/site";
 import { llmsTxt } from "@/lib/llms";
 import { robotsTxt } from "@/lib/robots";
-import { absoluteUrl, pageTitle, seo, serializeJsonLd } from "@/lib/seo";
+import { absoluteUrl, articleJsonLd, pageTitle, seo, serializeJsonLd } from "@/lib/seo";
 
 describe("site", () => {
   it("has a clean https url without trailing slash", () => {
@@ -43,6 +43,15 @@ describe("seo", () => {
   it("adds noindex when asked, and on every page of a demo build", () => {
     expect(seo({ noindex: true }).meta.some((m) => m.name === "robots")).toBe(true);
     expect(seo().meta.some((m) => m.name === "robots")).toBe(site.demo);
+  });
+
+  it("describes an article with its dates", () => {
+    const published = new Date("2026-01-02T00:00:00Z");
+    const article = articleJsonLd({ title: "T", description: "D", path: "/blog/t", published });
+    expect(article["@type"]).toBe("BlogPosting");
+    expect(article.url).toBe(`${site.url}/blog/t`);
+    expect(article.datePublished).toBe(published.toISOString());
+    expect(article.dateModified).toBe(published.toISOString());
   });
 
   it("cannot close its own script tag", () => {

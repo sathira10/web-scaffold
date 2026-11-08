@@ -4,7 +4,7 @@ import "@/styles/prose.css";
 import Base from "@/layouts/Base.astro";
 import { site } from "@/data/site";
 import { formatDate, publishedPosts } from "@/lib/posts";
-import { breadcrumbJsonLd } from "@/lib/seo";
+import { articleJsonLd, breadcrumbJsonLd } from "@/lib/seo";
 
 export async function getStaticPaths() {
   const posts = await publishedPosts();
@@ -22,6 +22,12 @@ const path = `/blog/${post.id}`;
   path={path}
   type="article"
   jsonLd={[
+    articleJsonLd({
+      title: post.data.title,
+      description: post.data.description,
+      path,
+      published: post.data.date,
+    }),
     breadcrumbJsonLd([
       { name: "Blog", path: "/blog" },
       { name: post.data.title, path },

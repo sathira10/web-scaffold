@@ -1,6 +1,6 @@
 {
   "$schema": "../../schemas/module.schema.json",
-  "description": "Blog or news: a Markdown content collection, a list page and post pages with dates and breadcrumbs. Posts are listed in llms.txt. Drafts build in dev only.",
+  "description": "Blog or news: a Markdown content collection, a list page and post pages with dates, breadcrumbs and BlogPosting JSON-LD. Posts are listed in llms.txt. Drafts build in dev only.",
   "frameworks": ["astro"],
   "nav": [
     {

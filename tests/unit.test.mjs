@@ -8,7 +8,7 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { after, describe, test } from "node:test";
 import { kinds, presets, ROOT, versions } from "../lib/catalog.mjs";
-import { replaceTokens } from "../lib/substitute.mjs";
+import { checkEmail, checkUrl, replaceTokens } from "../lib/substitute.mjs";
 import { merge, parseJsonc, walk } from "../lib/util.mjs";
 import { cases } from "./cases.mjs";
 
@@ -170,6 +170,14 @@ describe("helpers", () => {
     assert.equal(replaceTokens("x.astro", "__NAME__", map), "A &quot;B&quot; &amp; &lt;C>");
     assert.equal(replaceTokens("x.md", "__NAME__", map), 'A "B" & <C>');
   });
+  test("checkUrl wants https and a bare host; checkEmail wants an address", () => {
+    assert.equal(checkUrl("https://acme.test/"), "https://acme.test");
+    for (const bad of ["http://acme.test", "https://acme.test/x", "acme.test", "https://a b"])
+      assert.throws(() => checkUrl(bad), /--url/, bad);
+    assert.equal(checkEmail("hi@acme.test"), "hi@acme.test");
+    for (const bad of ["hi", "hi@acme", 'a"b@acme.test', "a b@acme.test"])
+      assert.throws(() => checkEmail(bad), /--email/, bad);
+  });
 });
 
 // ---------------------------------------------------------------------------------------------
@@ -229,6 +237,32 @@ describe("generate every case without installing", () => {
         ]),
       (error) => /missing from moduleOrder/.test(error.stderr.toString()),
     );
+  });
+  test("go-live refuses a URL or email that create would refuse", () => {
+    const dir = join(out, "golive");
+    create(["create", "--kind", "demo", "--name", "X", "--dir", dir]);
+    for (const [flag, value] of [
+      ["--url", "http://acme.test"],
+      ["--url", "https://acme.test/x"],
+      ["--email", "not-an-address"],
+    ])
+      assert.throws(
+        () =>
+          create([
+            "go-live",
+            "--url",
+            "https://acme.test",
+            "--email",
+            "hi@acme.test",
+            flag,
+            value,
+            "--dir",
+            dir,
+          ]),
+        (error) => new RegExp(flag).test(error.stderr.toString()),
+        `${flag} ${value}`,
+      );
+    assert.ok(readJson(join(dir, ".scaffold.json")).modules.includes("demo"), "nothing changed");
   });
   test("analytics on a demo is refused", () => {
     assert.throws(

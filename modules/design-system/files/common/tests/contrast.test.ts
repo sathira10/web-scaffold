@@ -49,15 +49,17 @@ const pairs: [string, string[], number][] = [
 
 describe("token contrast", () => {
   for (const [theme, tokens] of Object.entries(themes)) {
-    for (const [fg, grounds, min] of pairs) {
-      for (const ground of grounds) {
-        it(`${theme}: ${fg} on ${ground} reaches ${min}:1`, () => {
+    it(`${theme}: every pair reaches its minimum`, () => {
+      const failures: string[] = [];
+      for (const [fg, grounds, min] of pairs) {
+        for (const ground of grounds) {
           const [a, b] = [tokens.get(fg), tokens.get(ground)];
-          expect(a, `--${fg} is missing or not a hex value`).toBeDefined();
-          expect(b, `--${ground} is missing or not a hex value`).toBeDefined();
-          expect(ratio(a!, b!)).toBeGreaterThanOrEqual(min);
-        });
+          if (!a || !b) failures.push(`--${a ? ground : fg} is missing or not a hex value`);
+          else if (ratio(a, b) < min)
+            failures.push(`${fg} on ${ground}: ${ratio(a, b).toFixed(2)}:1, needs ${min}:1`);
+        }
       }
-    }
+      expect(failures).toEqual([]);
+    });
   }
 });

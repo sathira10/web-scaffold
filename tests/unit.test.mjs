@@ -287,6 +287,22 @@ describe("generate every case without installing", () => {
       );
     assert.ok(readJson(join(dir, ".scaffold.json")).modules.includes("demo"), "nothing changed");
   });
+  test("add keeps an edited file without --force", () => {
+    const dir = join(out, "keep-edit");
+    create(["create", "--kind", "app", "--name", "X", "--dir", dir]);
+    const config = join(dir, "vite.config.ts");
+    writeFileSync(config, "// mine\n");
+    create(["add", "worker-api", "--dir", dir]);
+    assert.equal(readFileSync(config, "utf8"), "// mine\n");
+  });
+  test("add --force replaces an edited file", () => {
+    const dir = join(out, "force-edit");
+    create(["create", "--kind", "app", "--name", "X", "--dir", dir]);
+    const config = join(dir, "vite.config.ts");
+    writeFileSync(config, "// mine\n");
+    create(["add", "worker-api", "--force", "--dir", dir]);
+    assert.notEqual(readFileSync(config, "utf8"), "// mine\n");
+  });
   test("analytics on a demo is refused", () => {
     assert.throws(
       () =>

@@ -312,6 +312,38 @@ describe("generate every case without installing", () => {
     create(["add", "worker-api", "--force", "--dir", dir]);
     assert.notEqual(readFileSync(config, "utf8"), "// mine\n");
   });
+  test("go-live with a bad option changes nothing", () => {
+    const dir = join(out, "golive-bad");
+    create(["create", "--kind", "demo", "--name", "X", "--dir", dir]);
+    const before = Object.fromEntries(
+      walk(dir).map((file) => [file, readFileSync(join(dir, file), "utf8")]),
+    );
+    for (const [flag, value, error] of [
+      ["--hosting", "invalid", /--hosting/],
+      ["--with", "analytics,nope", /missing from moduleOrder/],
+      ["--with", "worker-api", /works with vite/],
+    ])
+      assert.throws(
+        () =>
+          create([
+            "go-live",
+            "--url",
+            "https://acme.test",
+            "--email",
+            "hi@acme.test",
+            flag,
+            value,
+            "--dir",
+            dir,
+          ]),
+        (e) => error.test(e.stderr.toString()),
+        `${flag} ${value}`,
+      );
+    const after = Object.fromEntries(
+      walk(dir).map((file) => [file, readFileSync(join(dir, file), "utf8")]),
+    );
+    assert.deepEqual(after, before);
+  });
   test("analytics on a demo is refused", () => {
     assert.throws(
       () =>

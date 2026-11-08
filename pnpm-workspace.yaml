@@ -1,0 +1,3 @@
+# Single package, not a workspace. pnpm reads its settings from this file.
+# Don't install a release younger than a day (minutes), as generated projects do.
+minimumReleaseAge: 1440
